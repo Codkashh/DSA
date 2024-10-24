@@ -1,17 +1,29 @@
 class Solution {
-    public int[] twoSum(int[] numbers, int target) {
-        int leftPointer = 0;
-        int rightPointer = numbers.length - 1;
-        while(leftPointer<rightPointer){
-            int total = numbers[leftPointer] + numbers[rightPointer];
-            if(target == total){
-                return new int[]{leftPointer + 1, rightPointer + 1};
-            } else if(total > target){
-                rightPointer--;
-            } else {
-                leftPointer++;
+    public List<List<Integer>> threeSum(int[] nums) {
+        List<List<Integer>> res = new ArrayList<>();
+        Arrays.sort(nums);
+
+        for(int i=0; i<nums.length; i++){
+            if(i>0 && nums[i] == nums[i-1]){
+                continue;
+            }
+            int j = i+1;
+            int k = nums.length - 1;
+            while(j < k){
+                int total = nums[i] + nums[j] + nums[k];
+                if(total < 0){
+                    j++;
+                } else if(total > 0) {
+                    k--;
+                } else{
+                    res.add(Arrays.asList(nums[i], nums[j], nums[k]));
+                    j++;
+                    while(nums[j] == nums[j-1] && j<k) {
+                        j++;
+                    }
+                }
             }
         }
-        return new int[]{-1,1};
+        return res;
     }
 }
